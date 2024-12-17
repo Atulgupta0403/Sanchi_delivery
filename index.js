@@ -29,5 +29,5 @@ app.use("/" , restaurant);
 app.use("/" , menu);
 
 app.listen(process.env.PORT || 3000 , () => {
-    console.log("app is listening on port 3000")
+    console.log(`app is listening on port ${process.env.PORT}`);
 })
