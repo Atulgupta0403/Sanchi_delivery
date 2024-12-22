@@ -22,11 +22,13 @@ const login = require("./Routes/login")
 const signup = require("./Routes/signup")
 const restaurant = require("./Routes/restaurant")
 const menu = require("./Routes/menu")
+const forgetPass = require("./Routes/forgetPassword")
 
 app.use("/" , login);
 app.use("/" , signup);
 app.use("/" , restaurant);
 app.use("/" , menu);
+app.use("/" , forgetPass)
 
 app.listen(process.env.PORT || 3000 , () => {
     console.log(`app is listening on port ${process.env.PORT}`);
