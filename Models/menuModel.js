@@ -23,7 +23,7 @@ const menuSchema = new mongoose.Schema(
         required: true 
     },
     image: { 
-        type: String 
+        type: String
     },
   },
   { timestamps: true }

@@ -9,7 +9,7 @@ const signup = async (req, res) => {
 
         const earlyUser = await User.findOne({ email })
         if (earlyUser) {
-            return res.json({ message: "username or email already exist" })
+            return res.status(201).json({ message: "username or email already exist" })
         }
 
         function validateEmail(email) {
@@ -23,15 +23,15 @@ const signup = async (req, res) => {
         }
 
         if (!username || !email || !password) {
-            return res.json({ message: "All fields are required" })
+            return res.status(201).json({ message: "All fields are required" })
         }
 
         if (!validateEmail(email)) {
-            return res.json({ message: "Invalid email" });
+            return res.status(201).json({ message: "Invalid email" });
         }
 
         if (!validatePassword(password)) {
-            return res.json({ message: "Invalid password" });
+            return res.status(201).json({ message: "Invalid password" });
         }
 
         bcrypt.genSalt(10, function (err, salt) {
@@ -42,7 +42,7 @@ const signup = async (req, res) => {
                     password: hash,
                     address
                 })
-                res.json({ message: "User Register Successfully" })
+                res.status(200).json({ message: "User Register Successfully" })
             });
         });
     } catch (error) {
@@ -62,14 +62,14 @@ const login = async (req,res) => {
             console.log(token)
             // console.log(req.cookies.token)
 
-            res.json({message : token})
+            res.status(200).json({message : token})
         }
         else{   
-            res.json({message : "Wrong password"})
+            res.status(201).json({message : "Wrong password"})
         }        
     }
     else{
-        res.json({ message : "No User with this email" })
+        res.status(201).json({ message : "No User with this email" })
     }
 }
 

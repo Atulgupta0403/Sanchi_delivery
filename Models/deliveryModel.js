@@ -19,9 +19,16 @@ const deliverySchema = new mongoose.Schema(
         },
         status: {
             type: String,
-            enum: ["Available", "On Delivery"],
+            enum: ["pending", "accepted" , "on going" , "completed" ,  "cancel"],
             default: "Available",
         },
+        duration : {
+            type : Number,
+        },
+        distance : {
+            type : Number
+        }
+
     },
     { timestamps: true }
 );
