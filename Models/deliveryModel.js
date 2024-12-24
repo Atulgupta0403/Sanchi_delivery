@@ -26,7 +26,7 @@ const deliverySchema = new mongoose.Schema(
             type : Number,
         },
         distance : {
-            type : Number
+            type : Number //meter
         }
 
     },

@@ -16,7 +16,7 @@ const addRestaurant = async (req, res) => {
             userId: req.owner._id
         })
 
-        console.log(restaurant);
+        // console.log(restaurant);
         res.json({ message: restaurant })
     }
     else {
@@ -27,6 +27,7 @@ const addRestaurant = async (req, res) => {
 const getRestaurant = async (req, res) => {
     if (req.user) {
         const restaurant = await restaurantModel.find();
+        // console.log(req.user);
         res.json({ message: restaurant })
     }
     else {
