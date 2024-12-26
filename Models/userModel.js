@@ -26,8 +26,8 @@ const userSchema = new mongoose.Schema({
     },
     accountType: {
         type: String,
-        enum: ["customer", "admin", "restaurant_owner", "delivery_person"],
-        default : "customer"
+        enum: ["User", "admin", "Restaurant-owner", "Delivery-Partner"],
+        default : "User"
     },
     resetToken : {
         type : String

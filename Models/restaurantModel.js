@@ -16,7 +16,7 @@ const restaurantSchema = new mongoose.Schema({
     },
     cuisine : {
         type: [String], 
-        required: true 
+        require : true 
     },
     menu: [{ 
         type: mongoose.Schema.Types.ObjectId,
@@ -27,7 +27,7 @@ const restaurantSchema = new mongoose.Schema({
         default: 0 
     },
     image: {
-        type: String 
+        type: String
     }
 })
 

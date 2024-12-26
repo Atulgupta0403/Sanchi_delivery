@@ -50,7 +50,8 @@ const getDistanceTime = async (req,res) => {
 }
 
 const getSuggestion = async (req,res) => {
-    const { input } = req.query;
+    const { input } = req.params;
+    console.log(req.params)
     if(!input){
         res.json({message : "query is required"})
     }

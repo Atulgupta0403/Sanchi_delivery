@@ -5,7 +5,8 @@ const cookieParser = require("cookie-parser")
 
 const signup = async (req, res) => {
     try {
-        const { username, email, address, password } = req.body;
+        const { username, email, address, password , accountType } = req.body;
+        // console.log(accountType)
 
         const earlyUser = await User.findOne({ email })
         if (earlyUser) {
@@ -40,8 +41,10 @@ const signup = async (req, res) => {
                     username,
                     email,
                     password: hash,
-                    address
+                    address,
+                    accountType
                 })
+                console.log(user)
                 res.status(200).json({ message: "User Register Successfully" })
             });
         });
@@ -59,10 +62,10 @@ const login = async (req,res) => {
         if(result){
             const token = jwt.sign(email , process.env.SECRET)
             await res.cookie('token' , token , {maxAge: 900000})
-            console.log(token)
+            // console.log(token)
             // console.log(req.cookies.token)
 
-            res.status(200).json({message : token})
+            res.status(200).json({message : token , accountType : user.accountType})
         }
         else{   
             res.status(201).json({message : "Wrong password"})

@@ -4,26 +4,31 @@ const restaurantModel = require("../Models/restaurantModel");
 
 const addMenu = async (req,res) => {
     if(req.owner){
-
-        const {itemName , price , description , category } = req.body;
+        const {itemName , price , description , category , image } = req.body;
         const ownerId = req.owner._id;
         const restaurant = await restaurantModel.findOne({userId : ownerId});
+
+        if(!restaurant){
+            return res.status(201).json("First add Restaurant");
+        }
 
         const item = await menuModel.create({
             itemName,
             description,
             price,
             category,
-            restaurantId : restaurant._id
+            restaurantId : restaurant._id,
+            image
         })
 
         restaurant.menu.push(item._id);
         await restaurant.save();
 
-        res.json({message : item})
+        return res.status(200).json({message : "Menu Added Successully"})
+        // res.json({message : item})
     }
     else{
-        res.json({message : "Unauthorized"})
+        return res.status(201).json({message : "Unauthorized"})
     }
 }
 

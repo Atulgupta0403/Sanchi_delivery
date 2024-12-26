@@ -6,6 +6,6 @@ router.get("/map" , getCoordinates);
 
 router.get("/getDistance" , getDistanceTime);
 
-router.get("/getSuggestion" , getSuggestion);
+router.get("/getSuggestion/:input" , getSuggestion);
 
 module.exports = router;
