@@ -5,7 +5,7 @@ const cookieParser = require("cookie-parser")
 
 const signup = async (req, res) => {
     try {
-        const { username, email, address, password , accountType } = req.body;
+        const { username, email, address, password, accountType } = req.body;
         // console.log(accountType)
 
         const earlyUser = await User.findOne({ email })
@@ -54,27 +54,64 @@ const signup = async (req, res) => {
 }
 
 
-const login = async (req,res) => {
-    const {email , password} = req.body;
+const login = async (req, res) => {
+    const { email, password } = req.body;
     const user = await User.findOne({ email });
-    if(user){
-        const result = await bcrypt.compare(password , user.password)
-        if(result){
-            const token = jwt.sign(email , process.env.SECRET)
-            await res.cookie('token' , token , {maxAge: 900000})
+    if (user) {
+        const result = await bcrypt.compare(password, user.password)
+        if (result) {
+            const token = jwt.sign(email, process.env.SECRET)
+            await res.cookie('token', token, { maxAge: 900000 })
             // console.log(token)
             // console.log(req.cookies.token)
 
-            res.status(200).json({message : token , accountType : user.accountType})
+            res.status(200).json({ message: token, accountType: user.accountType })
         }
-        else{   
-            res.status(201).json({message : "Wrong password"})
-        }        
+        else {
+            res.status(201).json({ message: "Wrong password" })
+        }
     }
-    else{
-        res.status(201).json({ message : "No User with this email" })
+    else {
+        res.status(201).json({ message: "No User with this email" })
     }
 }
 
 
-module.exports = { signup , login }
+const bookmark = async (req, res) => {
+    if (req.user) {
+        const { Itemid } = req.body;
+        const user = req.user;
+        const index = user.bookmark.indexOf(Itemid);
+        if (index > -1) {
+            user.bookmark.splice(index, 1);
+            await user.save();
+            return res.status(200).json({ message: "Removed from bookmarks" });
+        } else {
+            user.bookmark.push(Itemid);
+            await user.save();
+            return res.status(200).json({ message: "Added to bookmarks" });
+        }
+    }
+    else {
+        return res.status(201).json({ message: "Unauthorized" });
+    }
+}
+
+
+const getBookmark = async (req,res) => {
+    if(req.user){
+        const user = req.user;
+        const bookmark = user.bookmark;
+        if(bookmark.length > 0){
+            res.status(200).json({message : bookmark});
+        }
+        else{
+            res.status(201).json({message : "No result"});
+        }
+    }
+    else{
+        return res.status(201).json({message : "Unauthorized"});
+    }
+}
+
+module.exports = { signup, login, bookmark , getBookmark}

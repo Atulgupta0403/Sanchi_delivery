@@ -20,10 +20,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         require : true
     },
-    orders: {
+    orders: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "order"
-    },
+    }],
     accountType: {
         type: String,
         enum: ["User", "admin", "Restaurant-owner", "Delivery-Partner"],
@@ -34,7 +34,11 @@ const userSchema = new mongoose.Schema({
     },
     resetTokenExpires : {
         type : Date
-    }
+    },
+    bookmark : [{
+        type : String,
+        default: null
+    }]
 }, { timestamps: true })
 
 
