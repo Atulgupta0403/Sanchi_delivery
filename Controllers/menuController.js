@@ -49,5 +49,19 @@ const getMenu = async (req,res) => {
     }
 }
 
+const getItem = async (req, res) => {
+    if (req.user) {
+        try {
+            const id = req.params.id;
+            // console.log("id         " , id)
+            const item = await menuModel.findOne({ _id: id });
+            return res.status(200).json({ message: item });
+        } catch (error) {
+            return res.status(500).json({ error: "Internal server error" });
+        }
+    } else {
+        return res.status(401).json({ error: "Unauthorized access" });
+    }
+};
 
-module.exports = {addMenu , getMenu}
+module.exports = {addMenu , getMenu , getItem}

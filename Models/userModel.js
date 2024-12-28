@@ -38,6 +38,9 @@ const userSchema = new mongoose.Schema({
     bookmark : [{
         type : String,
         default: null
+    }],
+    like : [{
+        type: String
     }]
 }, { timestamps: true })
 

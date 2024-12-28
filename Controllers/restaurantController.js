@@ -2,7 +2,7 @@ const restaurantModel = require("../Models/restaurantModel");
 
 const addRestaurant = async (req, res) => {
     if (req.owner) {
-        console.log(req.owner)
+        // console.log(req.owner)
 
         const { restaurantName, location, cuisine , image} = req.body;
 
