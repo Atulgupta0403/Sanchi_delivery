@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
     }],
     accountType: {
         type: String,
-        enum: ["User", "admin", "Restaurant-owner", "Delivery-Partner"],
+        enum: ["customer", "admin", "Restaurant-owner", "Delivery-Partner"],
         default : "User"
     },
     resetToken : {
@@ -41,42 +41,15 @@ const userSchema = new mongoose.Schema({
     }],
     like : [{
         type: String
-    }]
+    }],
+    profileImage : {
+        type : String,
+        default : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqafzhnwwYzuOTjTlaYMeQ7hxQLy_Wq8dnQg&s"
+    }
 }, { timestamps: true })
 
 
-// const customerSchema = new mongoose.Schema({
-//     userId: {
-//         type: mongoose.Schema.Types.ObjectId,
-//         ref: "User"
-//     },
-//     orderHistory : [{
-//         type : mongoose.Schema.Types.ObjectId,
-//         ref : "Order"
-//     }]
-// })
-
-// const restaurantSchema = new mongoose.Schema({
-//     userId: {
-//         type: mongoose.Schema.Types.ObjectId,
-//         ref: "User"
-//     },
-//     restaurantId : [{
-//         type : mongoose.Schema.Types.ObjectId,
-//         ref : "Restaurant"
-//     }]
-// })
-
-// const deliveryPersonSchema = new mongoose.Schema({
-//     userId: {
-//         type: mongoose.Schema.Types.ObjectId,
-//         ref: "User"
-//     },
-// })
 
 const User = mongoose.model("User", userSchema);
-// const customer = mongoose.model("Customer", customerSchema);
-// const restaurantOwner = mongoose.model("RestaurantOwner", restaurantSchema);
-// const deliveryPerson = mongoose.model("DeliveryPerson", deliveryPersonSchema);
 
 module.exports = { User};

@@ -86,11 +86,11 @@ const bookmark = async (req, res) => {
         if (index > -1) {
             user.bookmark.splice(index, 1);
             await user.save();
-            return res.status(200).json({ message: "Removed from bookmarks" , show : "Add Bookmark" });
+            return res.status(200).json({ message: "Removed from bookmarks", show: "Add Bookmark" });
         } else {
             user.bookmark.push(Itemid);
             await user.save();
-            return res.status(200).json({ message: "Added to bookmarks" , show : "Remove Bookmark" });
+            return res.status(200).json({ message: "Added to bookmarks", show: "Remove Bookmark" });
         }
     }
     else {
@@ -109,10 +109,12 @@ const getBookmark = async (req, res) => {
         // console.log("Items   " , items);
 
         if (bookmark.length > 0) {
+            // console.log("if")
             res.status(200).json({ message: items });
         }
         else {
-            res.status(200).json({ message: ["No result"] });
+            // console.log("else")
+            res.status(201).json({ message: "No result" });
         }
     }
     else {
@@ -124,8 +126,14 @@ const getOrder = async (req, res) => {
     if (req.user) {
         const user = req.user;
         const orders = user.orders;
+
+        const idArray = Array.isArray(orders) ? orders : [orders];
+        const items = await menuModel.find({ _id: { $in: idArray } })
+        console.log(items)
+
+        // console.log(orders)
         if (orders.length > 0) {
-            return res.status(200).json({ message: orders });
+            return res.status(200).json({ message: items });
         }
         else {
             return res.status(200).json({ message: ["No result"] });
@@ -149,4 +157,14 @@ const deleteUser = async (req, res) => {
 }
 
 
-module.exports = { signup, login, bookmark, getBookmark, getOrder, deleteUser }
+const profile = (req, res) => {
+    if (req.user) {
+        const user = req.user;
+        res.status(200).json({ message: user })
+    }
+    else {
+        res.status(201).json({ message: "Unauthorized" })
+    }
+}
+
+module.exports = { signup, login, bookmark, getBookmark, getOrder, deleteUser, profile }
