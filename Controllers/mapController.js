@@ -7,7 +7,7 @@ const getMapCordinate = async (address) => {
     const resposne = await axios.get(url)
     if(resposne.data.status === "OK"){
         const location = resposne.data.results[ 0 ].geometry.location;
-        console.log(location)
+        // console.log(location)
         return location
     }
     else{
@@ -18,7 +18,7 @@ const getMapCordinate = async (address) => {
 const getCoordinates = async (req,res) => {
     const { address } = req.query;
 
-    console.log(getMapCordinate(address));
+    // console.log(getMapCordinate(address));
     const Coordinates = await getMapCordinate(address);
     res.json({message : Coordinates}) 
 
@@ -37,9 +37,9 @@ const getDistanceTime = async (req,res) => {
     try {
         const response = await axios.get(url);
         if(response.data.status === 'OK'){
-            console.log(response);
+            // console.log(response);
             const data = await response.data.rows[ 0 ].elements[ 0 ];
-            console.log(data.duration)
+            // console.log(data.duration)
             res.json({message : [{"time" : data.duration.text} , {"distance" : data.distance.text}]})
         }
     } catch (error) {
@@ -51,7 +51,7 @@ const getDistanceTime = async (req,res) => {
 
 const getSuggestion = async (req,res) => {
     const { input } = req.params;
-    console.log(req.params)
+    // console.log(req.params)
     if(!input){
         res.json({message : "query is required"})
     }
