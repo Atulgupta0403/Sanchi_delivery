@@ -25,12 +25,13 @@ function initializeSocket(server) {
             const user = await User.findOne({ email: decodedData })
             const item = await menuModel.findOne({ _id : itemId})
             const restaurantId = item.restaurantId;
+            console.log(item)
 
             user.orders.push(itemId);
             await user.save();
-            console.log(item.restaurantId)
+            // console.log(item.restaurantId)
             // console.log(user);
-            io.emit("request", {address : user.address});
+            io.emit("request", {address : user.address , item : item});
 
         });
 
@@ -44,10 +45,20 @@ function initializeSocket(server) {
             io.emit("reject" , "Your order has been rejected")
         })
 
+        socket.on("riderAccept" , (data) => {
+            console.log("Rider   ")
+            console.log(data)
+        })
 
-        socket.on('disconnect', () => {
-            console.log(`Client disconnected: ${socket.id}`);
-        });
+        socket.on("riderReject" , (data) => {
+
+            console.log("Rider   ")
+            console.log(data)
+        })
+
+        // socket.on('disconnect', () => {
+        //     console.log(`Client disconnected: ${socket.id}`);
+        // });
     });
 }
 

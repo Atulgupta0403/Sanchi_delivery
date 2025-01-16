@@ -37,6 +37,18 @@ const getRestaurant = async (req, res) => {
     }
 }
 
+const profile = async (req,res) => {
+    if(req.owner){
+        // console.log(req.owner)
+        const restaurant = await restaurantModel.findOne({userId : req.owner._id})
+        // console.log(restaurant)
+        res.json({message : restaurant})
+    }
+    else{
+        res.json({message : "UnAuthorized"})
+    }
+}
 
 
-module.exports = { addRestaurant, getRestaurant };
+
+module.exports = { addRestaurant, getRestaurant , profile};

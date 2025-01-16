@@ -36,11 +36,9 @@ const addMenu = async (req,res) => {
 const getMenu = async (req,res) => {
     if(req.user){
         const {ids} = req.query;
-        // console.log(req.query)
         // console.log(ids)
-        
-        const idArray = Array.isArray(ids) ? ids : [ids];
-        const items = await menuModel.find({ _id: { $in: idArray } });
+        const items = await menuModel.find({ restaurantId : ids});
+        // console.log(items)
         // console.log(items);
         res.json({message : items})
     }

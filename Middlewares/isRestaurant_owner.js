@@ -4,7 +4,7 @@ const {User} = require("../Models/userModel")
 
 const restaurantOwner = async (req,res,next) => {
     const token  = req.headers["authorization"];
-    console.log("token is owner " , token)
+    // console.log("token is owner " , token)
     if(token){
         const data = jwt.verify(token , process.env.SECRET)
         const owner = await User.findOne({ email : data})

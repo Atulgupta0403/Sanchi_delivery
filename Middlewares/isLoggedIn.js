@@ -7,6 +7,7 @@ const isLoggedIn = async (req,res,next) => {
     if(authHeader){
         const data = jwt.verify(authHeader , process.env.SECRET);
         const user = await User.findOne({ email : data});
+        // console.log(user)
         req.user = user;
         next();
     }
