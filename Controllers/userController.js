@@ -167,4 +167,51 @@ const profile = (req, res) => {
     }
 }
 
-module.exports = { signup, login, bookmark, getBookmark, getOrder, deleteUser, profile }
+
+const addToCart = async (req,res) => {
+    if(req.user){
+        const { itemId } = req.body;
+        const user = req.user;
+        user.cartItems.push(itemId)
+        await user.save()
+        console.log(user)
+        res.status(200).json({message : user.cartItems})
+    }
+    else{
+        res.status(201).json({ message: "Unauthorized" })
+    }
+}
+
+const getCart = async (req,res) => {
+    if(req.user){
+        const user = req.user;
+        const cartItems = user.cartItems;
+
+        const items = await Promise.all(cartItems.map(async (id) => {
+            const item = await menuModel.findOne({ _id: id });
+            return item;
+        }));
+
+        console.log(items);
+
+        res.json({ message: items });
+    }
+    else{
+        res.status(201).json({ message: "Unauthorized" })
+    }
+}
+
+const like = async (req,res) => {
+    if(req.user){
+        const {itemId} = req.body;
+        const user = req.user;
+        user.like.push(itemId)
+        await user.save()
+        res.status(200).json({message : "liked"})
+    }
+    else{
+        res.status(201).json({ message: "Unauthorized" })
+    }
+}
+
+module.exports = { signup, login, bookmark, getBookmark, getOrder, deleteUser, profile, addToCart, getCart, like}
